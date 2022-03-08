@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("message")
+@RequestMapping("api/")
 public class MessageController {
     private final List<String> messages = new ArrayList<>() {{
         add("Hello #1");
@@ -17,7 +17,7 @@ public class MessageController {
         add("Hello #4");
     }};
 
-    @GetMapping
+    @RequestMapping("message")
     public List<String> list() {
         return messages;
     }
