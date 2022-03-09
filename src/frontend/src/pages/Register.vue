@@ -3,12 +3,13 @@
     <BContainer>
       <BRow class="justify-content-md-center">
         <BCol :cols="12" :lg="5">
-          <b-form class="form border shadow rounded-3 pl-lg-5 p-sm-4 p-3" @submit="login">
-            <p class="fs-4 text-center">Login</p>
+          <b-form class="form border shadow rounded-3 pl-lg-5 p-sm-4 p-3" @submit="register">
+            <p class="fs-4 text-center">Register</p>
             <b-form-group
                 id="input-group-1"
                 label="Username:"
                 label-for="input-1"
+                description="We'll never share your username with anyone else."
             >
               <b-form-input
                   id="input-1"
@@ -25,11 +26,19 @@
                   required
               ></b-form-input>
             </b-form-group>
-            <p class="form__error small text-danger" :hidden="!form.error">Invalid username or password</p>
-            <Button :loading="loading">Login</Button>
+            <b-form-group id="input-group-2" label="Password confirmation:" label-for="input-2">
+              <b-form-input
+                  id="input-2"
+                  v-model="form.password_confirmation"
+                  placeholder="Enter password again"
+                  required
+              ></b-form-input>
+            </b-form-group>
+            <p class="form__error small text-danger" :hidden="!form.error">This username is already taken!</p>
+            <Button :loading="loading">Register</Button>
             <span class="px-3">or</span>
-            <router-link :to="{ name: 'register' }">
-              <b-button>Register</b-button>
+            <router-link :to="{ name: 'home' }">
+              <b-button>Login</b-button>
             </router-link>
           </b-form>
         </BCol>
@@ -50,6 +59,7 @@ export default {
       form: reactive({
         username: '',
         password: '',
+        password_confirmation: '',
         error: false
       })
     }
@@ -65,12 +75,16 @@ export default {
       setLoadingStatus: 'preloader/setLoadingStatus',
       saveToken: 'auth/saveToken'
     }),
-    async login() {
+    async register() {
       this.setLoadingStatus(true)
-      this.axios.post("auth/login", this.form).then((response) => {
-        this.saveToken(response.data.token)
-        this.form.error = false
-        this.$router.push({name: 'desks'})
+      this.axios.post("auth/register", this.form).then(() => {
+        this.axios.post("auth/login", this.form).then((response) => {
+          this.saveToken(response.data.token)
+          this.form.error = false
+          this.$router.push({name: 'desks'})
+        }).catch(() => this.form.error = true).finally(() => {
+          this.setLoadingStatus(false)
+        })
       }).catch(() => this.form.error = true).finally(() => {
         this.setLoadingStatus(false)
       })

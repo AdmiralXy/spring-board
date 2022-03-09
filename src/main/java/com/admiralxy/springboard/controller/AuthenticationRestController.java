@@ -1,6 +1,7 @@
 package com.admiralxy.springboard.controller;
 
 import com.admiralxy.springboard.dto.AuthenticationRequestDto;
+import com.admiralxy.springboard.dto.UserDto;
 import com.admiralxy.springboard.entity.User;
 import com.admiralxy.springboard.security.jwt.JwtTokenProvider;
 import com.admiralxy.springboard.service.interfaces.IUserService;
@@ -55,5 +56,10 @@ public class AuthenticationRestController {
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
+    }
+
+    @PostMapping("register")
+    public User register(@RequestBody User user) {
+        return userService.register(user);
     }
 }

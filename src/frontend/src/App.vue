@@ -1,5 +1,8 @@
 <template>
-  <router-view></router-view>
+  <div class="app-container">
+    <router-view></router-view>
+  </div>
+  <span class="btn" :hidden="true"></span>
 </template>
 
 <script>
@@ -11,11 +14,7 @@ export default {
     }
   },
   mounted() {
-    fetch("api/message", {
-      headers: new Headers({
-        'Authorization': 'Bearer_eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpdmFuIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY0Njc3MTQxNywiZXhwIjoxNjQ2Nzc1MDE3fQ.cKejjwizXk1Ittwqqs4rnWcT3DIFXfrEBcCDnkJGRck'
-      }),
-    }).then((response) => response.text()).then((data) => this.msg = data)
+    this.$store.dispatch('init/clientInit')
   }
 }
 </script>
@@ -24,5 +23,17 @@ export default {
 @import '../node_modules/typeface-roboto/index.css';
 *, html, body {
   font-family: Roboto, sans-serif;
+}
+
+.app-container {
+  background: rgb(195 195 195 / 51%);
+}
+
+.btn:focus {
+  box-shadow: unset !important;
+}
+
+.btn:hover {
+  opacity: 0.8;
 }
 </style>
