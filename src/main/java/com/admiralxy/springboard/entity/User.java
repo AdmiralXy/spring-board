@@ -18,6 +18,12 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_desks",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "desk_id", referencedColumnName = "id")})
+    private List<Desk> desks;
+
     public String getUsername() {
         return username;
     }
@@ -40,5 +46,13 @@ public class User extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Desk> getDesks() {
+        return desks;
+    }
+
+    public void setDesks(List<Desk> desks) {
+        this.desks = desks;
     }
 }

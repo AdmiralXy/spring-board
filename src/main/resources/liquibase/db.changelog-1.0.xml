@@ -43,23 +43,27 @@
     </changeSet>
 
     <changeSet id="1.0.3" author="admiralxy">
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="user_roles"
-                                 constraintName="fk_user_roles_user"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="users"/>
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="user_roles"
+                constraintName="fk_user_roles_user"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="users"
+        />
     </changeSet>
 
     <changeSet id="1.0.4" author="admiralxy">
-        <addForeignKeyConstraint baseColumnNames="role_id"
-                                 baseTableName="user_roles"
-                                 constraintName="fk_user_roles_roles"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="roles"/>
+        <addForeignKeyConstraint
+                baseColumnNames="role_id"
+                baseTableName="user_roles"
+                constraintName="fk_user_roles_roles"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="roles"
+        />
     </changeSet>
 
     <changeSet id="1.0.5" author="admiralxy">
@@ -70,6 +74,46 @@
         <insert tableName="roles">
             <column name="name" value="ROLE_ADMIN"/>
         </insert>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="admiralxy">
+        <createTable tableName="desks">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_desks">
+            <column name="user_id" type="BIGINT">
+            </column>
+
+            <column name="desk_id" type="BIGINT">
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="user_desks"
+                constraintName="fk_user_desks_user"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="users"
+        />
+
+        <addForeignKeyConstraint
+                baseColumnNames="desk_id"
+                baseTableName="user_desks"
+                constraintName="fk_user_desks_desks"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="desks"
+        />
     </changeSet>
 
 </databaseChangeLog>

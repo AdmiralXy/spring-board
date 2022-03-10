@@ -24,8 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String HOME_ENDPOINT = "/";
     private static final String CLIENT_ENDPOINT = "/p-**";
-    private static final String JS_FOLDER_ENDPOINT = "/js/**";
-    private static final String CSS_FOLDER_ENDPOINT = "/css/**";
+    private static final String NUXT_FILES_ENDPOINT = "/_nuxt/**";
     private static final String LOGIN_REGISTER_ENDPOINT = "/api/auth/**";
     private static final String ADMIN_ENDPOINT = "/api/admin/**";
     private static final String USER_ENDPOINT = "/api/**";
@@ -51,8 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HOME_ENDPOINT).permitAll()
                 .antMatchers(CLIENT_ENDPOINT).permitAll()
-                .antMatchers(JS_FOLDER_ENDPOINT).permitAll()
-                .antMatchers(CSS_FOLDER_ENDPOINT).permitAll()
+                .antMatchers(NUXT_FILES_ENDPOINT).permitAll()
                 .antMatchers(LOGIN_REGISTER_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .antMatchers(USER_ENDPOINT).hasRole("USER")
