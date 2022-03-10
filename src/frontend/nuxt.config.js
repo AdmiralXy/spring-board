@@ -48,6 +48,13 @@ export default {
     }
   },
 
+  // Generate
+  generate: {
+    routes: [
+      '/'
+    ]
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
