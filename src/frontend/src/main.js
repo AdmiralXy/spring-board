@@ -59,7 +59,12 @@ const page = path => () => import(`@/pages/${path}.vue`).then(m => m.default || 
 const routes = [
     { path: '/', name: 'home', component: page('Home') },
     { path: '/register', name: 'register', component: page('Register') },
-    { path: '/home', name: 'desks', component: page('Desks') }
+    { path: '/home', name: 'desks', component: page('Desks') },
+    {
+        path: '/:catchAll(.*)',
+        name: 'notFound',
+        component: page('NotFound')
+    }
 ]
 
 const router = createRouter({
