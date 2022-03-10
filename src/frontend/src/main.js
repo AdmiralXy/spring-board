@@ -58,11 +58,11 @@ const page = path => () => import(`@/pages/${path}.vue`).then(m => m.default || 
 
 const routes = [
     { path: '/', name: 'home', component: page('Home') },
-    { path: '/register', name: 'register', component: page('Register') },
-    { path: '/home', name: 'desks', component: page('Desks') },
+    { path: '/p-register', name: 'register', component: page('Register') },
+    { path: '/p-home', name: 'desks', component: page('Desks') },
     {
-        path: '/:catchAll(.*)',
-        name: 'notFound',
+        path: '/p-:catchAll(.*)',
+        name: '404',
         component: page('NotFound')
     }
 ]

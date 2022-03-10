@@ -6,7 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class RouterController {
-    @RequestMapping("/**/{path:[^.]*}")
+    @RequestMapping("/p-**")
     public ModelAndView redirect() {
         return new ModelAndView("forward:/");
     }
