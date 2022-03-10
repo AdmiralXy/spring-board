@@ -13,9 +13,7 @@ export default {
     }
   },
   mounted() {
-    // this.$axios.post('message').then((response) => {
-    //   this.message = response
-    // })
+
   },
   components: {
     Layout

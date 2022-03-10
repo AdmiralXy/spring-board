@@ -19,7 +19,7 @@
           </a-input>
         </a-form-model-item>
         <a-form-model-item>
-          <a-checkbox>
+          <a-checkbox v-model="remember">
             Remember me
           </a-checkbox>
           <a-button type="primary" html-type="submit" class="login-form-button"
@@ -39,24 +39,31 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
   data() {
     return {
       form: {
         username: null,
         password: null
-      }
+      },
+      remember: true
     }
   },
   methods: {
+    ...mapActions({
+      saveToken: 'auth/saveToken'
+    }),
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values);
-        }
-      });
-    }
+      this.$axios.post('auth/login', this.form).then((response) => {
+        this.saveToken({
+          token: response.data.token,
+          remember: this.remember
+        })
+      })
+    },
   }
 }
 </script>

@@ -4,6 +4,7 @@ import com.admiralxy.springboard.dto.AuthenticationRequestDto;
 import com.admiralxy.springboard.dto.UserDto;
 import com.admiralxy.springboard.entity.User;
 import com.admiralxy.springboard.security.jwt.JwtTokenProvider;
+import com.admiralxy.springboard.security.jwt.JwtUser;
 import com.admiralxy.springboard.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,5 +63,11 @@ public class AuthenticationRestController {
     @PostMapping("register")
     public User register(@RequestBody User user) {
         return userService.register(user);
+    }
+
+    @PostMapping("user")
+    public User register() {
+        JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUsername(jwtUser.getUsername());
     }
 }

@@ -29,7 +29,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '~plugins/nuxt-client-init',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,6 +41,7 @@ export default {
     '@nuxtjs/google-fonts'
   ],
 
+  // Google fonts
   googleFonts: {
     families: {
       Roboto: true
@@ -49,15 +51,19 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/router'
+    '@nuxtjs/router',
+    'cookie-universal-nuxt'
   ],
 
   // Axios global configure
   axios: {
-    prefix: '/api/',
-    host: 'localhost',
-    port: '8080',
-    credentials: true
+    proxy: true,
+    prefix: '/api/'
+  },
+
+  // Proxy
+  proxy: {
+    '/api/': 'http://localhost:8080',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

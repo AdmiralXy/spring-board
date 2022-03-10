@@ -10,7 +10,8 @@ const routes = [
     path: '/',
     component: page('index'),
     children: [
-      { path: '', name: 'login', component: page('login') }
+      { path: '', name: 'login', component: page('login') },
+      { path: 'desks', name: 'desks', component: page('desks') }
     ]
   }
 ]
