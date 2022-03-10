@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container min-vh-100 min-vw-100">
     <router-view></router-view>
   </div>
   <span class="btn" :hidden="true"></span>

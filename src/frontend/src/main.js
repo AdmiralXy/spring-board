@@ -50,8 +50,7 @@ axios.interceptors.response.use((response) => {
         })
     }
 
-    //return Promise.reject(error)
-    return false
+    return Promise.reject(error)
 })
 
 const page = path => () => import(`@/pages/${path}.vue`).then(m => m.default || m)
@@ -59,7 +58,8 @@ const page = path => () => import(`@/pages/${path}.vue`).then(m => m.default || 
 const routes = [
     { path: '/', name: 'home', component: page('Home') },
     { path: '/p-register', name: 'register', component: page('Register') },
-    { path: '/p-home', name: 'desks', component: page('Desks') },
+    { path: '/p-desks', name: 'desks', component: page('Desks') },
+    { path: '/p-desk-:afterDesk(.*)', name: 'desk', component: page('Desk') },
     {
         path: '/p-:catchAll(.*)',
         name: '404',
