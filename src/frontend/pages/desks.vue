@@ -5,8 +5,10 @@
 </template>
 
 <script>
-export default {
+import {mapGetters, mapActions} from 'vuex';
 
+export default {
+  middleware: 'auth',
 }
 </script>
 

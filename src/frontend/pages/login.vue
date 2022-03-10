@@ -32,7 +32,6 @@
             register now!
           </a>
         </a-form-model-item>
-        {{ form }}
       </a-form-model>
     </div>
   </div>
@@ -42,6 +41,7 @@
 import {mapActions} from 'vuex'
 
 export default {
+  middleware: 'quest',
   data() {
     return {
       form: {
@@ -62,6 +62,7 @@ export default {
           token: response.data.token,
           remember: this.remember
         })
+        this.$router.push({ name: 'desks' })
       })
     },
   }

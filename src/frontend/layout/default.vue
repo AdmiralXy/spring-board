@@ -3,17 +3,21 @@
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
       <div class="logo">Spring Board</div>
       <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <a-menu-item key="1">
+        <a-menu-item key="1" @click="$router.push({ name: 'login' })" v-if="!authenticated">
           <a-icon type="user" />
           <span>Login</span>
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="2" @click="$router.push({ name: 'desks' })" v-if="authenticated">
           <a-icon type="unordered-list" />
           <span>My desks</span>
         </a-menu-item>
         <a-menu-item key="3" @click="openGithub">
           <a-icon type="github" />
           <span>Github</span>
+        </a-menu-item>
+        <a-menu-item key="9" @click="exit" v-if="authenticated">
+          <a-icon type="logout" />
+          <span>Logout</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -35,11 +39,18 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   data() {
     return {
       collapsed: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: 'auth/token'
+    })
   },
   methods: {
     openGithub() {
@@ -47,6 +58,13 @@ export default {
         'https://github.com/AdmiralXy/spring-board',
         '_blank' // <- This is what makes it open in a new window.
       )
+    },
+    ...mapActions({
+      logout: 'auth/logout'
+    }),
+    exit() {
+      this.logout()
+      this.$router.push("/")
     }
   }
 }

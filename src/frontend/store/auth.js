@@ -15,19 +15,21 @@ export const mutations = {
   },
 
   LOGOUT (state) {
-    state.user = null
     state.token = null
   },
 }
 
 // actions
 export const actions = {
-  saveToken ({ commit, dispatch }, { token, remember }) {
+  saveToken ({ commit }, { token, remember }) {
     commit('SET_TOKEN', token)
 
     this.$cookies.set('Bearer', token, {
-      path: '/',
       maxAge: remember ? 3600000 : 3600
     })
+  },
+  logout ({ commit }) {
+    commit('LOGOUT')
+    this.$cookies.remove('Bearer')
   }
 }
