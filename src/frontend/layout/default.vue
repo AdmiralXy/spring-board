@@ -108,6 +108,10 @@ export default {
   font-size: 6px !important;
 }
 
+.ant-layout-content {
+  min-height: unset !important;
+}
+
 .form__error {
   margin-bottom: 15px;
 }

@@ -4,11 +4,11 @@
       <div class="card text-dark bg-light mb-3">
         <div class="card-header">Create new desk</div>
         <div class="card-body">
-          <a-input>
+          <a-input v-model="form.name">
             <a-icon slot="prefix" type="profile" />
           </a-input>
           <p class="card-text pt-3">
-            <a-button type="primary">
+            <a-button type="primary" @click="store" :disabled="!form.name">
               Create
             </a-button>
           </p>
@@ -34,11 +34,8 @@ export default {
   data() {
     return {
       form: {
-        username: null,
-        password: null
-      },
-      remember: true,
-      error: false
+        name: null
+      }
     }
   },
   mounted() {
@@ -56,8 +53,11 @@ export default {
       storeDesk: 'desk/storeDesk'
     }),
     store() {
-      this.storeDesk({name: 'name'}).then((response) => {
+      this.storeDesk(this.form).then(() => {
         this.fetchDesks()
+        this.$notification.success({
+          message: `'${this.form.name}' board created`,
+        })
       }).catch(() => {
         this.$notification.warn({
           message: 'An error has occurred',
