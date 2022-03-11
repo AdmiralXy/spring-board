@@ -9,12 +9,12 @@
       >
         <p class="form__title">Register</p>
         <a-form-model-item>
-          <a-input placeholder="Username" v-model="form.username">
+          <a-input placeholder="Username" v-model.trim="form.username">
             <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
           </a-input>
         </a-form-model-item>
         <a-form-model-item>
-          <a-input type="password" placeholder="Password" v-model="form.password">
+          <a-input type="password" placeholder="Password" v-model.trim="form.password">
             <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
           </a-input>
         </a-form-model-item>

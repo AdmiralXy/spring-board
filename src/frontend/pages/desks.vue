@@ -4,7 +4,7 @@
       <div class="card text-dark bg-light mb-3">
         <div class="card-header">Create new desk</div>
         <div class="card-body">
-          <a-input v-model="form.name">
+          <a-input v-model.trim="form.name">
             <a-icon slot="prefix" type="profile" />
           </a-input>
           <p class="card-text pt-3">

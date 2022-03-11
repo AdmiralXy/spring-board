@@ -32,7 +32,7 @@
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
-        <div class="container">
+        <div class="container" style="height: 100%">
           <Nuxt/>
         </div>
       </a-layout-content>
