@@ -66,7 +66,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("user")
-    public User register() {
+    public User user() {
         JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userService.findByUsername(jwtUser.getUsername());
     }
