@@ -18,19 +18,20 @@
             <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
           </a-input>
         </a-form-model-item>
+        <a-alert class="form__error" v-if="error" type="error" message="Invalid username or password" banner />
         <a-form-model-item>
           <a-checkbox v-model="remember">
             Remember me
           </a-checkbox>
-          <a-button type="primary" html-type="submit" class="login-form-button"
+          <a-button type="primary" html-type="submit" class="login-form-button" :loading="loadingStatus"
                     :disabled="!form.username || !form.password"
           >
             Log in
           </a-button>
           or
-          <a href="">
+          <a-button class="form__link" type="link" @click="$router.push({ name: 'register' })">
             register now!
-          </a>
+          </a-button>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   middleware: 'quest',
@@ -48,14 +49,23 @@ export default {
         username: null,
         password: null
       },
-      remember: true
+      remember: true,
+      error: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      loadingStatus: 'preloader/loadingStatus'
+    })
   },
   methods: {
     ...mapActions({
-      saveToken: 'auth/saveToken'
+      saveToken: 'auth/saveToken',
+      setLoadingStatus: 'preloader/setLoadingStatus'
     }),
     handleSubmit(e) {
+      this.error = false
+      this.setLoadingStatus(true)
       e.preventDefault();
       this.$axios.post('auth/login', this.form).then((response) => {
         this.saveToken({
@@ -63,6 +73,8 @@ export default {
           remember: this.remember
         })
         this.$router.push({ name: 'desks' })
+      }).catch(() => { this.error = true }).finally(() => {
+        this.setLoadingStatus(false)
       })
     },
   }

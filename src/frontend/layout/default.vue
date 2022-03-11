@@ -93,7 +93,7 @@ export default {
 
 #layout .logo {
   color: #fff;
-  font-size: 13px;
+  font-size: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,6 +104,18 @@ export default {
 
 .ant-layout-sider-collapsed .ant-layout-sider-children .logo {
   font-size: 6px !important;
+}
+
+.form__error {
+  margin-bottom: 15px;
+}
+
+.ant-alert-message {
+  font-size: 11px;
+}
+
+.form__link {
+  padding: 0 15px 0 1px;
 }
 
 @media screen and (max-width: 455px) {
