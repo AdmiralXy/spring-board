@@ -1,11 +1,8 @@
 package com.admiralxy.springboard.controller;
 
 import com.admiralxy.springboard.entity.Desk;
-import com.admiralxy.springboard.entity.User;
-import com.admiralxy.springboard.security.jwt.JwtUser;
-import com.admiralxy.springboard.service.interfaces.IUserService;
+import com.admiralxy.springboard.service.interfaces.IDeskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,17 +10,20 @@ import java.util.List;
 @RequestMapping(value = "api/desks")
 public class DesksRestController {
 
-    private final IUserService userService;
+    private final IDeskService deskService;
 
     @Autowired
-    public DesksRestController(IUserService userService) {
-        this.userService = userService;
+    public DesksRestController(IDeskService deskService) {
+        this.deskService = deskService;
     }
 
     @GetMapping
     public List<Desk> index() {
-        JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByUsername(jwtUser.getUsername());
-        return user.getDesks();
+        return deskService.getAll();
+    }
+
+    @PostMapping
+    public void store(@RequestBody Desk desk) {
+        deskService.save(desk);
     }
 }

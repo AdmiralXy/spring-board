@@ -12,9 +12,6 @@ export default {
       message: null,
     }
   },
-  mounted() {
-
-  },
   components: {
     Layout
   }

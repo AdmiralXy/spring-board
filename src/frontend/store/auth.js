@@ -27,9 +27,11 @@ export const actions = {
     this.$cookies.set('Bearer', token, {
       maxAge: remember ? 3600000 : 3600
     })
+    this.$axios.setToken(token, 'Bearer')
   },
   logout ({ commit }) {
     commit('LOGOUT')
+    this.$axios.setToken(false)
     this.$cookies.remove('Bearer')
   }
 }

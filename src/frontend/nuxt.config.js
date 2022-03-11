@@ -31,6 +31,7 @@ export default {
   plugins: [
     '@/plugins/antd-ui',
     '~plugins/nuxt-client-init',
+    '~/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
