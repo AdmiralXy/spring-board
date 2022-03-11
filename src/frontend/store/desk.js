@@ -19,15 +19,16 @@ export const mutations = {
     state.desk = data
   },
   ADD_TASK_TO_DESK (state, task) {
-    console.log("Before: " + state.desk.tasks)
     state.desk.tasks.push({name: task})
-    console.log("After: " + state.desk.tasks)
   },
   REMOVE_TASK_FROM_DESK (state, id) {
-    console.log("Before: " + state.desk.tasks)
     state.desk.tasks.splice(state.desk.tasks.findIndex(function(i){
       return i.id === id;
     }), 1);
+  },
+  ADD_POINT_TO_TASK (state, payload) {
+    let task = state.desk.tasks.find((i) => i.id === payload.id)
+    task.points.push({content: payload.point, status: 'ACTIVE'})
   }
 }
 

@@ -22,8 +22,15 @@
           {{ task.name }}
           <a-icon type="delete" @click="removeTask(task.id)" />
         </div>
-        <div class="card-body" v-for="point in task.points">
-          <h5 class="card-title">{{ point.content }}</h5>
+        <div class="card-body">
+          <a-input-search placeholder="Enter a new point" v-model="point" @search="addPoint(task.id)">
+            <a-button slot="enterButton" :disabled="!point">
+              <a-icon type="caret-right" />
+            </a-button>
+          </a-input-search>
+        </div>
+        <div class="card-body card-list" v-for="point in task.points">
+          <p>{{ point.content }}</p>
         </div>
       </div>
     </div>
@@ -39,7 +46,8 @@ export default {
     return {
       form: {
         name: null
-      }
+      },
+      point: ''
     }
   },
   mounted() {
@@ -57,7 +65,8 @@ export default {
     }),
     ...mapMutations({
       addTaskToDesk: 'desk/ADD_TASK_TO_DESK',
-      removeTaskFromDesk: 'desk/REMOVE_TASK_FROM_DESK'
+      removeTaskFromDesk: 'desk/REMOVE_TASK_FROM_DESK',
+      addPointToTask: 'desk/ADD_POINT_TO_TASK'
     }),
     addTask(name) {
       this.addTaskToDesk(name)
@@ -68,11 +77,16 @@ export default {
       this.removeTaskFromDesk(id)
       this.store()
     },
+    addPoint(id) {
+      this.addPointToTask({id: id, point: this.point})
+      this.store()
+      this.point = ''
+    },
     store() {
       this.storeDesk(this.desk).then(() => {
         this.fetchDesk(this.$route.params.id)
         this.$notification.success({
-          message: `Task list created/updated`,
+          message: `Task list updated`,
         })
       }).catch(() => {
         this.$notification.warn({
@@ -88,15 +102,13 @@ export default {
 <style scoped>
 .card {
   min-height: 100%;
+  display: block !important;
 }
 
-.card-pointer {
-  cursor: pointer;
-  transition-duration: 0.2s;
+.card-list {
+  display: block !important;
+  flex: none !important;
+  padding: 0 1rem 0 1rem !important;
 }
 
-.card-pointer:hover {
-  transform: scale(1.05);
-  transition-duration: 0.2s;
-}
 </style>
