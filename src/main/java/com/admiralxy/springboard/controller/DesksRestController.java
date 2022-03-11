@@ -26,4 +26,9 @@ public class DesksRestController {
     public void store(@RequestBody Desk desk) {
         deskService.save(desk);
     }
+
+    @GetMapping("/{id}")
+    public Desk show(@PathVariable Long id) {
+        return deskService.find(id);
+    }
 }

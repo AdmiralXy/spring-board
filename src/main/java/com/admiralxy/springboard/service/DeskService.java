@@ -44,8 +44,13 @@ public class DeskService implements IDeskService {
 
     @Override
     public Desk find(Long id) {
+        jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByUsername(jwtUser.getUsername());
+        List<Desk> userDesks = user.getDesks();
         Optional<Desk> desk = deskRepository.findById(id);
-        return desk.orElse(null);
+        if (userDesks.contains(desk.orElse(null)))
+            return desk.orElse(null);
+        return null;
     }
 
     @Override
