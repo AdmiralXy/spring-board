@@ -22,6 +22,11 @@ public class Desk extends BaseEntity {
     @JsonIgnore
     private List<User> users;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinTable(name = "desk_tasks",
+            joinColumns = {@JoinColumn(name = "desk_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "task_id", referencedColumnName = "id")})
+    private List<Task> tasks;
 
     public String getName() {
         return name;
@@ -39,6 +44,14 @@ public class Desk extends BaseEntity {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

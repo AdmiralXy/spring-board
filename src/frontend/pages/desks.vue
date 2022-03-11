@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="col-lg-3 col-md-6 mb-3" v-for="desk in desks" :key="desk.id">
-      <div class="card card-pointer text-dark bg-light mb-3">
+      <div class="card card-pointer text-dark bg-light mb-3" @click="$router.push({ name: 'desk', params: { id: desk.id } })">
         <div class="card-header">{{ desk.name }}</div>
         <div class="card-body">
           <h5 class="card-title">Desk #{{ desk.id }}</h5>

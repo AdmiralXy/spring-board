@@ -116,4 +116,88 @@
         />
     </changeSet>
 
+    <changeSet id="1.0.7" author="admiralxy">
+        <createTable tableName="tasks">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="desk_tasks">
+            <column name="desk_id" type="BIGINT">
+            </column>
+
+            <column name="task_id" type="BIGINT">
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="desk_id"
+                baseTableName="desk_tasks"
+                constraintName="fk_desk_tasks_desk"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="desks"
+        />
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="desk_tasks"
+                constraintName="fk_desk_tasks_tasks"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="tasks"
+        />
+    </changeSet>
+
+    <changeSet id="1.0.8" author="admiralxy">
+        <createTable tableName="points">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="content" type="mediumtext">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="task_points">
+            <column name="task_id" type="BIGINT">
+            </column>
+
+            <column name="point_id" type="BIGINT">
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="task_id"
+                baseTableName="task_points"
+                constraintName="fk_task_points_task"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="tasks"
+        />
+
+        <addForeignKeyConstraint
+                baseColumnNames="point_id"
+                baseTableName="task_points"
+                constraintName="fk_task_points_points"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="points"
+        />
+    </changeSet>
+
 </databaseChangeLog>
