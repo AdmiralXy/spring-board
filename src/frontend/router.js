@@ -11,8 +11,8 @@ const routes = [
     component: page('index'),
     children: [
       { path: '', name: 'login', component: page('login') },
-      { path: 'register', name: 'register', component: page('register') },
-      { path: 'desks', name: 'desks', component: page('desks') }
+      { path: 'p-register', name: 'register', component: page('register') },
+      { path: 'p-desks', name: 'desks', component: page('desks') }
     ]
   }
 ]

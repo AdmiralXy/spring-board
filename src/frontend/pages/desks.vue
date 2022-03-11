@@ -1,20 +1,28 @@
 <template>
-  <div style="padding: 20px;">
-    <a-row :gutter="16">
-      <a-col :span="4" v-for="desk in desks" :key="desk.id">
-        <a-card :title="desk.name" :bordered="false">
-          Open
-          <a-icon type="caret-right" />
-        </a-card>
-      </a-col>
-      <a-col :span="4" :hidden="loadingStatus">
-        <a-card title="Create new desk" :bordered="false" @click="store">
-          <div class="desk__new">
-            <a-icon type="plus-circle" />
-          </div>
-        </a-card>
-      </a-col>
-    </a-row>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="card text-dark bg-light mb-3">
+        <div class="card-header">Create new desk</div>
+        <div class="card-body">
+          <a-input>
+            <a-icon slot="prefix" type="profile" />
+          </a-input>
+          <p class="card-text pt-3">
+            <a-button type="primary">
+              Create
+            </a-button>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3" v-for="desk in desks" :key="desk.id">
+      <div class="card card-pointer text-dark bg-light mb-3">
+        <div class="card-header">{{ desk.name }}</div>
+        <div class="card-body">
+          <h5 class="card-title">Desk #{{ desk.id }}</h5>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,21 +69,18 @@ export default {
 }
 </script>
 
-<style>
-.desk__new {
-  font-size: 21px;
+<style scoped>
+.card {
+  min-height: 100%;
 }
 
-.ant-card-head-title, .ant-card-body {
-  color: #fff;
+.card-pointer {
+  cursor: pointer;
+  transition-duration: 0.2s;
 }
 
-.ant-card {
-  background-color: #6d97ef;
-}
-
-.desk__new {
-  display: flex;
-  justify-content: center;
+.card-pointer:hover {
+  transform: scale(1.05);
+  transition-duration: 0.2s;
 }
 </style>
