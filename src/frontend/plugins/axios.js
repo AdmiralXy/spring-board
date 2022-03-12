@@ -2,10 +2,10 @@ import {notification} from 'ant-design-vue'
 
 export default function ({ $axios, store, redirect }) {
   $axios.onError(error => {
-    if ((error.response.status === 401) && store.getters['auth/check']) {
+    if ((error.response.status === 401) && store.getters['auth/token']) {
       notification.warn({
         message: 'Not authorized',
-        description: 'An error occurred, please login.',
+        description: 'Please log in.',
       })
       store.dispatch('auth/logout')
       redirect({ name: 'login' })

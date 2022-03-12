@@ -1,6 +1,7 @@
 package com.admiralxy.springboard.security.jwt;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import javax.servlet.FilterChain;
@@ -8,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtTokenFilter extends GenericFilterBean {
@@ -23,14 +25,18 @@ public class JwtTokenFilter extends GenericFilterBean {
             throws IOException, ServletException {
 
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            Authentication auth = jwtTokenProvider.getAuthentication(token);
+        try {
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                Authentication auth = jwtTokenProvider.getAuthentication(token);
 
-            if (auth != null) {
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                if (auth != null) {
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
             }
+            filterChain.doFilter(req, res);
+        } catch (AuthenticationException e) {
+            ((HttpServletResponse) res).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-        filterChain.doFilter(req, res);
     }
 
 }
