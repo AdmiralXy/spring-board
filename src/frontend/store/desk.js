@@ -29,6 +29,11 @@ export const mutations = {
   ADD_POINT_TO_TASK (state, payload) {
     let task = state.desk.tasks.find((i) => i.id === payload.id)
     task.points.push({content: payload.point, status: 'ACTIVE'})
+  },
+  UPDATE_POINT_STATUS (state, payload) {
+    let task = state.desk.tasks.find((i) => i.id === payload.taskId)
+    let point = task.points.find((i) => i.id === payload.pointId)
+    point.status = point.status === 'ACTIVE' ? 'NOT_ACTIVE' : 'ACTIVE'
   }
 }
 

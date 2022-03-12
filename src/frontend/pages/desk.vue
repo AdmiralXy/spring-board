@@ -29,8 +29,16 @@
             </a-button>
           </a-input-search>
         </div>
-        <div class="card-body card-list" v-for="point in task.points">
-          <p>{{ point.content }}</p>
+        <div class="card-body card-list">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between" v-for="point in task.points">
+              {{ point.content }}
+              <a-button :type="point.status === 'ACTIVE' ? 'primary' : 'danger'" size="small" @click="togglePointStatus(task.id, point.id)">
+                <a-icon type="check" v-if="point.status !== 'ACTIVE'" />
+                <a-icon type="close" v-if="point.status === 'ACTIVE'" />
+              </a-button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -66,7 +74,8 @@ export default {
     ...mapMutations({
       addTaskToDesk: 'desk/ADD_TASK_TO_DESK',
       removeTaskFromDesk: 'desk/REMOVE_TASK_FROM_DESK',
-      addPointToTask: 'desk/ADD_POINT_TO_TASK'
+      addPointToTask: 'desk/ADD_POINT_TO_TASK',
+      updatePointStatus: 'desk/UPDATE_POINT_STATUS'
     }),
     addTask(name) {
       this.addTaskToDesk(name)
@@ -81,6 +90,10 @@ export default {
       this.addPointToTask({id: id, point: this.point})
       this.store()
       this.point = ''
+    },
+    togglePointStatus(taskId, pointId) {
+      this.updatePointStatus({taskId, pointId})
+      this.store()
     },
     store() {
       this.storeDesk(this.desk).then(() => {
