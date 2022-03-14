@@ -34,6 +34,13 @@ export const mutations = {
     let task = state.desk.tasks.find((i) => i.id === payload.taskId)
     let point = task.points.find((i) => i.id === payload.pointId)
     point.status = point.status === 'ACTIVE' ? 'NOT_ACTIVE' : 'ACTIVE'
+  },
+  SORT_POINTS (state) {
+    state.desk.tasks.forEach(task => {
+      task.points.sort((a, b) => {
+        return a.id - b.id
+      })
+    })
   }
 }
 
@@ -51,8 +58,11 @@ export const actions = {
     }
   },
   async fetchDesk ({ commit }, payload) {
-    const response = await this.$axios.get('/desks/' + payload)
+    const response = await this.$axios.get('/desks/' + payload).finally(() => {
+      commit('preloader/SET_LOADING_STATUS', false, { root: true })
+    })
     commit('SET_DESK', response.data)
+    commit('SORT_POINTS')
   },
   async storeDesk ({ commit }, data) {
     return await this.$axios.post('/desks', data)

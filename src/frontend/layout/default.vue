@@ -1,43 +1,46 @@
 <template>
-  <a-layout id="layout">
-    <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-      <div class="logo">Spring Board</div>
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
-        <a-menu-item key="1" @click="$router.push({ name: 'login' })" v-if="!authenticated">
-          <a-icon type="user" />
-          <span>Login</span>
-        </a-menu-item>
-        <a-menu-item key="2" @click="$router.push({ name: 'desks' })" v-if="authenticated">
-          <a-icon type="unordered-list" />
-          <span>My desks</span>
-        </a-menu-item>
-        <a-menu-item key="3" @click="openGithub">
-          <a-icon type="github" />
-          <span>Github</span>
-        </a-menu-item>
-        <a-menu-item key="9" @click="exit" v-if="authenticated">
-          <a-icon type="logout" />
-          <span>Logout</span>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0">
-        <a-icon
-          class="trigger"
-          :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-          @click="() => (collapsed = !collapsed)"
-        />
-      </a-layout-header>
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
-        <div class="container" style="height: 100%">
-          <Nuxt/>
-        </div>
-      </a-layout-content>
+  <a-spin :spinning="loadingStatus">
+    <a-icon slot="indicator" type="loading" style="font-size: 32px" spin />
+    <a-layout id="layout">
+      <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
+        <div class="logo">Spring Board</div>
+        <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+          <a-menu-item key="1" @click="$router.push({ name: 'login' }).catch(() => {})" v-if="!authenticated">
+            <a-icon type="user"/>
+            <span>Login</span>
+          </a-menu-item>
+          <a-menu-item key="2" @click="$router.push({ name: 'desks' }).catch(() => {})" v-if="authenticated">
+            <a-icon type="unordered-list"/>
+            <span>My desks</span>
+          </a-menu-item>
+          <a-menu-item key="3" @click="openGithub">
+            <a-icon type="github"/>
+            <span>Github</span>
+          </a-menu-item>
+          <a-menu-item key="9" @click="exit" v-if="authenticated">
+            <a-icon type="logout"/>
+            <span>Logout</span>
+          </a-menu-item>
+        </a-menu>
+      </a-layout-sider>
+      <a-layout>
+        <a-layout-header style="background: #fff; padding: 0">
+          <a-icon
+            class="trigger"
+            :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+            @click="() => (collapsed = !collapsed)"
+          />
+        </a-layout-header>
+        <a-layout-content
+          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+        >
+          <div class="container" style="height: 100%">
+            <Nuxt/>
+          </div>
+        </a-layout-content>
+      </a-layout>
     </a-layout>
-  </a-layout>
+  </a-spin>
 </template>
 
 <script>
@@ -51,7 +54,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      authenticated: 'auth/token'
+      authenticated: 'auth/token',
+      loadingStatus: 'preloader/loadingStatus'
     })
   },
   methods: {
@@ -122,6 +126,25 @@ export default {
 
 .form__link {
   padding: 0 15px 0 1px;
+}
+
+.ant-spin-nested-loading > div > .ant-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+}
+
+.ant-btn-success {
+  color: #fff;
+  background-color: #05a95c;
+  border-color: #039650;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
 }
 
 @media screen and (max-width: 455px) {

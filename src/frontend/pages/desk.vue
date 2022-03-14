@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <h3 class="pb-5">{{ this.desk.name }}</h3>
+  <div class="row" v-if="!loadingStatus">
+    <h3 class="pb-5">Board: {{ this.desk.name }}</h3>
     <div class="col-lg-3 col-md-6 mb-3">
       <div class="card text-dark bg-light mb-3">
         <div class="card-header">Create new task list</div>
@@ -31,9 +31,9 @@
         </div>
         <div class="card-body card-list">
           <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between" v-for="point in task.points">
+            <li :class="point.status === 'ACTIVE' ? 'danger' : 'success'" class="list-group-item d-flex justify-content-between" v-for="point in task.points">
               {{ point.content }}
-              <a-button :type="point.status === 'ACTIVE' ? 'primary' : 'danger'" size="small" @click="togglePointStatus(task.id, point.id)">
+              <a-button :type="point.status === 'ACTIVE' ? 'danger' : 'success'" size="small" @click="togglePointStatus(task.id, point.id)">
                 <a-icon type="check" v-if="point.status !== 'ACTIVE'" />
                 <a-icon type="close" v-if="point.status === 'ACTIVE'" />
               </a-button>
@@ -59,17 +59,20 @@ export default {
     }
   },
   mounted() {
+    this.setLoadingStatus(true)
     this.fetchDesk(this.$route.params.id)
   },
   computed: {
     ...mapGetters({
-      desk: 'desk/desk'
+      desk: 'desk/desk',
+      loadingStatus: 'preloader/loadingStatus'
     })
   },
   methods: {
     ...mapActions({
       fetchDesk: 'desk/fetchDesk',
-      storeDesk: 'desk/storeDesk'
+      storeDesk: 'desk/storeDesk',
+      setLoadingStatus: 'preloader/setLoadingStatus'
     }),
     ...mapMutations({
       addTaskToDesk: 'desk/ADD_TASK_TO_DESK',
@@ -78,20 +81,24 @@ export default {
       updatePointStatus: 'desk/UPDATE_POINT_STATUS'
     }),
     addTask(name) {
+      this.setLoadingStatus(true)
       this.addTaskToDesk(name)
       this.fetchDesk(this.$route.params.id)
       this.store()
     },
     removeTask(id) {
+      this.setLoadingStatus(true)
       this.removeTaskFromDesk(id)
       this.store()
     },
     addPoint(id) {
+      this.setLoadingStatus(true)
       this.addPointToTask({id: id, point: this.point})
       this.store()
       this.point = ''
     },
     togglePointStatus(taskId, pointId) {
+      this.setLoadingStatus(true)
       this.updatePointStatus({taskId, pointId})
       this.store()
     },
@@ -106,6 +113,8 @@ export default {
           message: 'An error has occurred',
           description: 'Unable to update your desk.',
         })
+      }).finally(() => {
+        this.setLoadingStatus(false)
       })
     }
   }
@@ -124,4 +133,7 @@ export default {
   padding: 0 1rem 0 1rem !important;
 }
 
+.list-group-item.success {
+  background-color: #08d30a14;
+}
 </style>
