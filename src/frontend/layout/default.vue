@@ -140,6 +140,14 @@ export default {
   .login-form-forgot {
     font-size: 12px !important;
   }
+
+  .ant-layout-sider.ant-layout-sider-dark + .ant-layout .ant-layout-content {
+    display: none;
+  }
+
+  .ant-layout-sider.ant-layout-sider-dark.ant-layout-sider-collapsed + .ant-layout .ant-layout-content {
+    display: block;
+  }
 }
 
 </style>
