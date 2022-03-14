@@ -13,7 +13,7 @@ const routes = [
       { path: '', name: 'login', component: page('login') },
       { path: 'p-register', name: 'register', component: page('register') },
       { path: 'p-desks', name: 'desks', component: page('desks') },
-      { path: 'p-desk/:id', name: 'desk', component: page('desk') }
+      { path: 'p-desk-:id', name: 'desk', component: page('desk') }
     ]
   }
 ]
