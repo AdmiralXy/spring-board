@@ -12,7 +12,7 @@ Deployed on Heroku cloud platform, may take a long time to load or be unavailabl
 
 ### Tools
 
-* Java Spring
+* Java
 * Spring Boot
 * Spring Security
 * PostgreSQL
