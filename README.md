@@ -4,7 +4,11 @@
 
 You can create and manage various boards, tasks and mark the status points of their completion.
 
-![alt text](assets/application.png)
+Deployed on Heroku cloud platform, may take a long time to load or be unavailable:
+
+[spring-board-app.herokuapp.com](https://spring-board-app.herokuapp.com/)
+
+![alt text](assets/application.jpg)
 
 ### Tools
 
